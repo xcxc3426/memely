@@ -1,5 +1,3 @@
-<p align="center"><img src="memely.png" width="210" alt="Memely's original 8-bit Shiba Inu mascot with the classic meme side-eye"></p>
-
 # Memely
 
 **Meme culture intelligence for Solana.**
