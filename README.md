@@ -2,8 +2,6 @@
 
 # Memely
 
-### Where memes become communities.
-
 **Meme culture intelligence for Solana.**
 
 Memely follows the path from a joke to a narrative to a community. It maps which ideas travel, keeps the original source posts beside the interpretation and places supplied Solana activity in a separate evidence layer.
