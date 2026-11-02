@@ -1,0 +1,7 @@
+{
+  "name":"memely","version":"0.1.0","private":true,"type":"module","license":"MIT",
+  "description":"Meme culture intelligence for Solana: narrative maps, source-linked research and an optional Grok interpretation adapter.",
+  "engines":{"node":">=20"},
+  "scripts":{"start":"node serve.mjs","data":"node reference.mjs","build":"node build.mjs","demo":"node cli.mjs","ai":"node ai-cli.mjs","test":"node --test","check":"node check.mjs","screenshots":"node capture.mjs","integrity":"node manifest.mjs --verify"},
+  "keywords":["memely","solana","memes","narratives","ai","research"]
+}

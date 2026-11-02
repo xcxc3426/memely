@@ -1,0 +1,359 @@
+{
+  "schema": "memely/receipt/1",
+  "encoding": "JSON.stringify / UTF-8 / no trailing newline",
+  "algorithm": "SHA-256",
+  "digest": "1bd4984cce405650cbcb316063742ea253d5d2d9328e62f28f42169aa8dc355a",
+  "packet": {
+    "schema": "memely/research/1",
+    "origin": "example",
+    "asOf": "2026-11-02T12:00:00.000Z",
+    "window": {
+      "hours": 6,
+      "currentStart": "2026-11-02T06:00:00.000Z",
+      "previousStart": "2026-11-02T00:00:00.000Z",
+      "convention": "start exclusive / end inclusive"
+    },
+    "theme": {
+      "id": "night-shift",
+      "name": "Night shift",
+      "description": "Overtime animals, desk rituals and the community that stays awake.",
+      "keywords": [
+        "night shift",
+        "overtime",
+        "coffee"
+      ],
+      "phase": "cross-community"
+    },
+    "measurements": {
+      "currentPosts": 11,
+      "previousPosts": 3,
+      "change": 8,
+      "growth": 2.6666666666666665,
+      "communityAliases": 5,
+      "authorAliases": 11
+    },
+    "posts": [
+      {
+        "id": "p004",
+        "communityId": "goose",
+        "author": "author-04",
+        "at": "2026-11-02T07:00:00.000Z",
+        "text": "coffee and night shift lore. we made a desk sticker.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/4",
+        "matches": [
+          "night shift",
+          "coffee"
+        ]
+      },
+      {
+        "id": "p005",
+        "communityId": "moon",
+        "author": "author-05",
+        "at": "2026-11-02T08:00:00.000Z",
+        "text": "night shift roll call: one lamp, six chairs, no manager.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/5",
+        "matches": [
+          "night shift"
+        ]
+      },
+      {
+        "id": "p017",
+        "communityId": "orbit",
+        "author": "author-14",
+        "at": "2026-11-02T08:00:00.000Z",
+        "text": "the office goose joined the night shift.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/17",
+        "matches": [
+          "night shift"
+        ]
+      },
+      {
+        "id": "p006",
+        "communityId": "moon",
+        "author": "author-06",
+        "at": "2026-11-02T09:00:00.000Z",
+        "text": "the overtime committee has approved another snack.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/6",
+        "matches": [
+          "overtime"
+        ]
+      },
+      {
+        "id": "p007",
+        "communityId": "orbit",
+        "author": "author-07",
+        "at": "2026-11-02T09:00:00.000Z",
+        "text": "night shift drew a tiny crown on the coffee cup.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/7",
+        "matches": [
+          "night shift",
+          "coffee"
+        ]
+      },
+      {
+        "id": "p008",
+        "communityId": "orbit",
+        "author": "author-08",
+        "at": "2026-11-02T10:00:00.000Z",
+        "text": "coffee lore escaped the desk and reached the moon patch.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/8",
+        "matches": [
+          "coffee"
+        ]
+      },
+      {
+        "id": "p009",
+        "communityId": "nap",
+        "author": "author-09",
+        "at": "2026-11-02T10:00:00.000Z",
+        "text": "the night shift brought a pocket planet to work.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/9",
+        "matches": [
+          "night shift"
+        ]
+      },
+      {
+        "id": "p027",
+        "communityId": "nap",
+        "author": "author-24",
+        "at": "2026-11-02T10:00:00.000Z",
+        "text": "moon patch gardeners brought snacks for the night shift.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/27",
+        "matches": [
+          "night shift"
+        ]
+      },
+      {
+        "id": "p010",
+        "communityId": "nap",
+        "author": "author-10",
+        "at": "2026-11-02T11:00:00.000Z",
+        "text": "overtime art club made a lamp-shaped moon.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/10",
+        "matches": [
+          "overtime"
+        ]
+      },
+      {
+        "id": "p011",
+        "communityId": "crown",
+        "author": "author-11",
+        "at": "2026-11-02T11:00:00.000Z",
+        "text": "night shift is a group project with suspiciously good stickers.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/11",
+        "matches": [
+          "night shift"
+        ]
+      },
+      {
+        "id": "p012",
+        "communityId": "crown",
+        "author": "author-12",
+        "at": "2026-11-02T12:00:00.000Z",
+        "text": "coffee crew, meet the office goose. it runs the night shift now.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/12",
+        "matches": [
+          "night shift",
+          "coffee"
+        ]
+      }
+    ],
+    "previousPostIds": [
+      "p001",
+      "p002",
+      "p003"
+    ],
+    "previousPosts": [
+      {
+        "id": "p001",
+        "communityId": "lamp",
+        "author": "author-01",
+        "at": "2026-11-02T02:00:00.000Z",
+        "text": "night shift checked in. the lamp is now a community member.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/1"
+      },
+      {
+        "id": "p002",
+        "communityId": "lamp",
+        "author": "author-02",
+        "at": "2026-11-02T04:00:00.000Z",
+        "text": "overtime is a personality, apparently.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/2"
+      },
+      {
+        "id": "p003",
+        "communityId": "goose",
+        "author": "author-03",
+        "at": "2026-11-02T06:00:00.000Z",
+        "text": "the night shift has adopted an office goose.",
+        "kind": "original",
+        "origin": "example",
+        "source": "example:post/3"
+      }
+    ],
+    "activity": [
+      {
+        "communityId": "goose",
+        "stale": false,
+        "ageHours": 0,
+        "latest": {
+          "id": "a-goose-12",
+          "communityId": "goose",
+          "at": "2026-11-02T12:00:00.000Z",
+          "quoteReserveSOL": 82,
+          "activeAccountCount": 300,
+          "origin": "example",
+          "source": "example:aggregate/goose/12"
+        },
+        "baseline": {
+          "id": "a-goose-6",
+          "communityId": "goose",
+          "at": "2026-11-02T06:00:00.000Z",
+          "quoteReserveSOL": 88,
+          "activeAccountCount": 240,
+          "origin": "example",
+          "source": "example:aggregate/goose/6"
+        },
+        "accountChange": 60,
+        "reserveChangeSOL": -6
+      },
+      {
+        "communityId": "moon",
+        "stale": false,
+        "ageHours": 0,
+        "latest": {
+          "id": "a-moon-12",
+          "communityId": "moon",
+          "at": "2026-11-02T12:00:00.000Z",
+          "quoteReserveSOL": 294,
+          "activeAccountCount": 274,
+          "origin": "example",
+          "source": "example:aggregate/moon/12"
+        },
+        "baseline": {
+          "id": "a-moon-6",
+          "communityId": "moon",
+          "at": "2026-11-02T06:00:00.000Z",
+          "quoteReserveSOL": 252,
+          "activeAccountCount": 232,
+          "origin": "example",
+          "source": "example:aggregate/moon/6"
+        },
+        "accountChange": 42,
+        "reserveChangeSOL": 42
+      },
+      {
+        "communityId": "orbit",
+        "stale": false,
+        "ageHours": 0,
+        "latest": {
+          "id": "a-orbit-12",
+          "communityId": "orbit",
+          "at": "2026-11-02T12:00:00.000Z",
+          "quoteReserveSOL": 51.2,
+          "activeAccountCount": 67,
+          "origin": "example",
+          "source": "example:aggregate/orbit/12"
+        },
+        "baseline": {
+          "id": "a-orbit-6",
+          "communityId": "orbit",
+          "at": "2026-11-02T06:00:00.000Z",
+          "quoteReserveSOL": 50.6,
+          "activeAccountCount": 61,
+          "origin": "example",
+          "source": "example:aggregate/orbit/6"
+        },
+        "accountChange": 6,
+        "reserveChangeSOL": 0.6000000000000014
+      },
+      {
+        "communityId": "nap",
+        "stale": true,
+        "ageHours": 3,
+        "latest": {
+          "id": "a-nap-9",
+          "communityId": "nap",
+          "at": "2026-11-02T09:00:00.000Z",
+          "quoteReserveSOL": 89,
+          "activeAccountCount": 108,
+          "origin": "example",
+          "source": "example:aggregate/nap/9"
+        },
+        "baseline": {
+          "id": "a-nap-6",
+          "communityId": "nap",
+          "at": "2026-11-02T06:00:00.000Z",
+          "quoteReserveSOL": 86,
+          "activeAccountCount": 102,
+          "origin": "example",
+          "source": "example:aggregate/nap/6"
+        },
+        "accountChange": null,
+        "reserveChangeSOL": null
+      },
+      {
+        "communityId": "crown",
+        "stale": false,
+        "ageHours": 0,
+        "latest": {
+          "id": "a-crown-12",
+          "communityId": "crown",
+          "at": "2026-11-02T12:00:00.000Z",
+          "quoteReserveSOL": 297.6,
+          "activeAccountCount": 436,
+          "origin": "example",
+          "source": "example:aggregate/crown/12"
+        },
+        "baseline": {
+          "id": "a-crown-6",
+          "communityId": "crown",
+          "at": "2026-11-02T06:00:00.000Z",
+          "quoteReserveSOL": 298.8,
+          "activeAccountCount": 418,
+          "origin": "example",
+          "source": "example:aggregate/crown/6"
+        },
+        "accountChange": 18,
+        "reserveChangeSOL": -1.1999999999999886
+      }
+    ],
+    "boundaries": [
+      "Keyword matches are local lexical associations, not model inferences.",
+      "Alias counts do not establish independent people.",
+      "Activity and social records are juxtaposed, not evidence of causality."
+    ],
+    "ai": {
+      "state": "prepared",
+      "adapter": "Optional xAI Responses call from the CLI",
+      "grokBotRole": "GROKBOT-OPERATOR.md"
+    }
+  },
+  "scope": "Local packet consistency; unsigned; not a blockchain anchor"
+}

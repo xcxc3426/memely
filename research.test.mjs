@@ -1,0 +1,12 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {analyse} from './analyse.mjs';
+import {makePacket,makeReceipt,verifyReceipt,validateInterpretation,localBrief} from './research.mjs';
+const data=JSON.parse(await readFile(new URL('reference-corpus.json',import.meta.url),'utf8')),packet=makePacket(analyse(data),'night-shift');
+test('the packet retains current and prior source text',()=>{assert.equal(packet.posts.length,11);assert.equal(packet.previousPosts.length,3);assert.deepEqual(packet.previousPostIds,packet.previousPosts.map(p=>p.id));});
+test('the packet explicitly marks AI research as prepared',()=>assert.equal(packet.ai.state,'prepared'));
+test('the reference receipt reproduces exactly',async()=>{const saved=JSON.parse(await readFile(new URL('reference-receipt.json',import.meta.url),'utf8'));assert.deepEqual(await makeReceipt(packet),saved);assert.equal((await verifyReceipt(saved)).valid,true);});
+test('editing a packet is detected by its receipt',async()=>{const r=await makeReceipt(packet);r.packet=structuredClone(r.packet);r.packet.measurements.currentPosts=999;await assert.rejects(verifyReceipt(r),/mismatch/);});
+test('unknown AI citations are rejected',()=>{const draft={title:'Culture note',summary:'A source-bounded reading.',observations:[{claim:'A narrative moved.',sourceIds:['made-up']}],questions:[]};assert.throws(()=>validateInterpretation(draft,packet),/unknown sources/);draft.observations[0].sourceIds=[packet.posts[0].id];assert.equal(validateInterpretation(draft,packet),draft);});
+test('a local brief identifies its origin and deterministic scope',()=>{const brief=localBrief(packet);assert.match(brief,/Origin: example/);assert.match(brief,/deterministic local brief/);assert.match(brief,/p\d{3}/);});

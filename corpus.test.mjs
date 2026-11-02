@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {validateCorpus,normalise,curate,themeMatches} from './corpus.mjs';
+const data=JSON.parse(await readFile(new URL('reference-corpus.json',import.meta.url),'utf8')),clock='2026-11-02T12:00:00.000Z';
+test('the reference corpus validates its post and activity references',()=>assert.equal(validateCorpus(data),data));
+test('normalisation handles width, case, punctuation and URLs',()=>assert.equal(normalise('ＮＩＧＨＴ—SHIFT! https://example.com/x'), 'night shift'));
+test('curation excludes two normalised copies and three reposts',()=>{const r=curate(data,clock);assert.equal(r.eligible.length,52);assert.equal(r.kept.length,47);assert.equal(r.removed.filter(x=>x.reason==='normalised duplicate').length,2);assert.equal(r.removed.filter(x=>x.reason==='explicit repost').length,3);});
+test('a repost does not create a new original observation',()=>{const r=curate(data,clock);assert.ok(r.kept.every(p=>p.kind==='original'));assert.ok(r.removed.filter(x=>x.reason==='explicit repost').every(x=>x.keptId));});
+test('keyword matching requires a complete normalised phrase',()=>{const t=data.themes[0];assert.ok(themeMatches({text:'A NIGHT-SHIFT desk.'},t).includes('night shift'));assert.deepEqual(themeMatches({text:'scoffee nightshift'},t),[]);});
+test('source IDs cannot collide across posts and activity',()=>{const d=structuredClone(data);d.activity[0].id=d.posts[0].id;assert.throws(()=>validateCorpus(d),/ambiguous/);});
+test('invalid community links and duplicate posts are rejected',()=>{const d=structuredClone(data);d.posts[0].communityId='unknown';assert.throws(()=>validateCorpus(d),/Unknown post community/);const b=structuredClone(data);b.posts.push(b.posts[0]);assert.throws(()=>validateCorpus(b),/Duplicate post/);});
+test('a repost cannot refer to a later original',()=>{const d=structuredClone(data);d.posts.find(p=>p.kind==='repost').at='2026-11-02T00:00:00.000Z';assert.throws(()=>validateCorpus(d),/precedes/);});
+test('future sources do not enter curation early',()=>{const r=curate(data,'2026-11-02T09:00:00.000Z');assert.ok(r.eligible.every(p=>p.at<='2026-11-02T09:00:00.000Z'));assert.equal(r.removed.length,0);});

@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {analyse} from './analyse.mjs';
+import {makePacket} from './research.mjs';
+import {buildAIRequest,interpret} from './ai-adapter.mjs';
+const data=JSON.parse(await readFile(new URL('reference-corpus.json',import.meta.url),'utf8')),packet=makePacket(analyse(data),'night-shift');
+test('request construction keeps evidence separate from instructions and disables retrieval storage',()=>{const r=buildAIRequest(packet,'user-chosen-model');assert.equal(r.store,false);assert.equal(r.input[0].role,'system');assert.deepEqual(JSON.parse(r.input[1].content),packet);assert.equal(r.max_output_tokens,2000);});
+test('missing credentials fail before a network request',async()=>{let calls=0;await assert.rejects(interpret(packet,{model:'chosen',fetchImpl:()=>{calls++;}}),/XAI_API_KEY/);assert.equal(calls,0);});
+test('a mocked Responses result is parsed with valid source references',async()=>{let request;const value={title:'A travelling joke',summary:'A research draft from the supplied corpus.',observations:[{claim:'The theme appears in a retained source.',sourceIds:[packet.posts[0].id]}],questions:['What source coverage is missing?']};const result=await interpret(packet,{apiKey:'test-key-not-real',model:'test-model',fetchImpl:async(url,options)=>{request={url,options};return {ok:true,text:async()=>JSON.stringify({id:'test-response',model:'test-model',status:'completed',output:[{type:'message',content:[{type:'output_text',text:JSON.stringify(value)}]}]})};}});assert.equal(request.url,'https://api.x.ai/v1/responses');assert.equal(result.state,'returned');assert.equal(result.interpretation.observations[0].sourceIds[0],packet.posts[0].id);});
+test('HTTP failures do not echo provider error bodies or keys',async()=>{await assert.rejects(interpret(packet,{apiKey:'test-secret',model:'test',fetchImpl:async()=>({ok:false,status:401})}),e=>e.message==='xAI request failed with HTTP 401');});
+test('oversized evidence packets fail locally',()=>{assert.throws(()=>buildAIRequest({...packet,extra:'x'.repeat(150001)},'test'),/exceeds/);});
+test('incomplete model results are rejected',async()=>{await assert.rejects(interpret(packet,{apiKey:'test',model:'test',fetchImpl:async()=>({ok:true,text:async()=>JSON.stringify({status:'incomplete',output:[]})})}),/not completed/);});

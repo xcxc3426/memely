@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {analyse,crossover} from './analyse.mjs';
+const data=JSON.parse(await readFile(new URL('reference-corpus.json',import.meta.url),'utf8')),report=analyse(data);
+test('the reference night-shift case has eleven posts across five community aliases',()=>{const t=report.themes[0];assert.equal(t.currentCount,11);assert.equal(t.previousCount,3);assert.equal(t.communities.length,5);assert.equal(t.phase,'cross-community');});
+test('current windows exclude their start and include their end',()=>{assert.ok(report.current.every(p=>p.at>'2026-11-02T06:00:00.000Z'&&p.at<=report.asOf));assert.ok(report.previous.every(p=>p.at>'2026-11-02T00:00:00.000Z'&&p.at<='2026-11-02T06:00:00.000Z'));});
+test('one-hour bins sum to the theme count',()=>{for(const t of report.themes)assert.equal(t.bins.reduce((s,b)=>s+b.count,0),t.currentCount);});
+test('theme assignments may exceed distinct original post count',()=>{assert.ok(report.themeAssignments>report.current.length);});
+test('every graph edge has exactly its reported post evidence',()=>{for(const t of report.themes)for(const e of t.edges){assert.equal(e.count,e.postIds.length);assert.ok(e.postIds.every(id=>t.posts.some(p=>p.id===id&&p.communityId===e.communityId)));}});
+test('the crossover matrix is consistent with the source-backed edges',()=>{for(const row of crossover(report)){const t=report.themes.find(t=>t.id===row.themeId);assert.equal(row.counts.reduce((a,b)=>a+b,0),t.currentCount);}});
+test('stale activity is visible while changes are withheld',()=>{const a=report.activity.find(a=>a.id==='nap');assert.equal(a.stale,true);assert.equal(a.ageHours,3);assert.equal(a.accountChange,null);assert.ok(a.latest);});
+test('activity is fresh exactly at the selected age budget',()=>{assert.equal(analyse(data,{activityMaxAgeHours:3}).activity.find(a=>a.id==='nap').stale,false);});
+test('missing baselines withhold changes rather than using zero',()=>{const d={...data,activity:data.activity.filter(a=>a.at>'2026-11-02T06:00:00.000Z')};const a=analyse(d).activity.find(a=>a.id==='lamp');assert.equal(a.stale,false);assert.equal(a.accountChange,null);});
+test('zero prior-post baselines have no percentage growth value',()=>{const d={...data,posts:data.posts.filter(p=>p.kind==='original'&&p.at>'2026-11-02T06:00:00.000Z')};const t=analyse(d).themes[0];assert.equal(t.previousCount,0);assert.equal(t.growth,null);});
+test('invalid windows fail without mutating the corpus',()=>{const bytes=JSON.stringify(data);assert.throws(()=>analyse(data,{windowHours:0}),/Window/);analyse(data);assert.equal(JSON.stringify(data),bytes);});

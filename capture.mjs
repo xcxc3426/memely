@@ -1,0 +1,12 @@
+import {createRequire} from 'node:module';
+import {readFile,writeFile} from 'node:fs/promises';
+import {analyse,selectTheme} from './analyse.mjs';
+import {makePacket,makeReceipt} from './research.mjs';
+import {SCREENS,render} from './screens.mjs';
+import {P,rect,type,label,rule,imageFit,dots,curve} from './draw.mjs';
+const require=createRequire(import.meta.url),{createCanvas,loadImage,GlobalFonts}=require(process.env.MEMELY_CANVAS_MODULE??'@napi-rs/canvas'),fonts=process.env.MEMELY_FONT_DIR??'/usr/share/fonts/truetype/dejavu';
+for(const [file,name] of [['DejaVuSans.ttf','DejaVu Sans'],['DejaVuSans-Bold.ttf','DejaVu Sans'],['DejaVuSansMono.ttf','DejaVu Sans Mono'],['DejaVuSansMono-Bold.ttf','DejaVu Sans Mono']])GlobalFonts.registerFromPath(fonts+'/'+file,name);
+const root=new URL('./',import.meta.url),corpus=JSON.parse(await readFile(new URL('reference-corpus.json',root),'utf8')),report=analyse(corpus),theme=selectTheme(report,'night-shift'),packet=makePacket(report,theme.id),receipt=await makeReceipt(packet),art=await loadImage(new URL('memely.png',root).pathname),canvas=createCanvas(1600,1100),ctx=canvas.getContext('2d');
+let view='';const checked=new Proxy(ctx,{get(o,k){if(k==='fillText')return (value,x,y)=>{if(x<0||y<0||x+o.measureText(String(value)).width>1601||y+parseFloat(o.font)>1099)throw new Error('Text outside '+view+': '+value);return o.fillText(value,x,y);};const v=Reflect.get(o,k,o);return typeof v==='function'?v.bind(o):v;},set:(o,k,v)=>Reflect.set(o,k,v,o)});
+for(const [i,v] of SCREENS.entries()){view=v.id;render(checked,{report,theme,packet,receipt,view},art);await writeFile(new URL(String(i+1).padStart(2,'0')+'-'+v.id+'.png',root),canvas.toBuffer('image/png'));}
+const cover=createCanvas(1600,800),c=cover.getContext('2d');rect(c,0,0,1600,800,P.bg);rect(c,0,0,1600,97,P.navy);type(c,'memely',65,23,45,P.white,'bold');label(c,'MEME CULTURE INTELLIGENCE / SOLANA',320,43,P.lime);dots(c,937,138,580,570,27);type(c,'Where memes',59,196,86,P.ink,'bold');type(c,'become',59,298,86,P.ink,'bold');rect(c,58,405,817,111,P.lime);type(c,'communities.',68,411,86,P.ink,'bold');type(c,'Read the jokes. Map the narratives.',65,584,29,P.pink,'bold');type(c,'AI research with a source trail.',65,640,26,P.muted);imageFit(c,art,943,143,590,543);rule(c,65,732,1530,732,P.ink,2);label(c,'NARRATIVE MAPS / COMMUNITY CROSSOVER / SOURCE-LINKED RESEARCH',65,757);await writeFile(new URL('memely-cover.png',root),cover.toBuffer('image/png'));console.log('Rendered twelve research views and the Memely cover.');

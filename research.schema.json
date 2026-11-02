@@ -1,0 +1,4 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema","$id":"urn:memely:research:1","title":"Memely research packet","type":"object","required":["schema","origin","asOf","window","theme","measurements","posts","previousPosts","previousPostIds","activity","boundaries","ai"],
+ "properties":{"schema":{"const":"memely/research/1"},"origin":{"enum":["example","user","mixed"]},"asOf":{"type":"string","format":"date-time"},"window":{"type":"object"},"theme":{"type":"object"},"measurements":{"type":"object"},"posts":{"type":"array"},"previousPosts":{"type":"array"},"previousPostIds":{"type":"array","items":{"type":"string"}},"activity":{"type":"array"},"boundaries":{"type":"array","items":{"type":"string"}},"ai":{"type":"object","properties":{"state":{"const":"prepared"}}}}
+}

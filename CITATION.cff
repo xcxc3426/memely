@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Cite the software version, source-corpus origin, dictionary and analysis window when using Memely results."
+title: "Memely: where memes become communities"
+type: software
+version: 0.1.0
+date-released: 2026-11-02
+authors:
+  - name: Memely contributors
+license: MIT
+abstract: "Meme culture research for Solana using source-backed narrative maps, explicit local measurements and optional AI interpretation."
